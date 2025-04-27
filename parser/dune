@@ -1,0 +1,9 @@
+(ocamllex lexer)
+
+(menhir
+ (modules parser))
+
+(library
+ (name rustlike_parser)
+ (modules ast lexer parser parser_driver unparser)
+ (libraries str))
