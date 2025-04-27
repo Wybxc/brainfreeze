@@ -1,0 +1,3 @@
+-R src Brainfreeze
+-arg "-output-directory extracted"
+src

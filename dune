@@ -1,0 +1,5 @@
+(executable
+ (name main)
+ (modules main)
+ (libraries str coqExtract)
+ (flags :standard -w -9))

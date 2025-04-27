@@ -1,0 +1,17 @@
+(rule
+ (targets CoqExtract.mli CoqExtract.ml)
+ (deps ../_CoqProject ../src/Main.v)
+ (mode promote)
+ (action
+  (chdir
+   ..
+   (progn
+    (run coq_makefile -f _CoqProject -o CoqMakefile)
+    (run make -f CoqMakefile)))))
+
+(library
+ (name coqExtract)
+ (modules CoqExtract)
+ (libraries coq-core.plugins.extraction)
+ (flags
+  (:standard -w -9 -w -27)))

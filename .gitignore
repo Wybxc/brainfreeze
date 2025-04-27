@@ -1,0 +1,37 @@
+# Dune/OCaml/Coq 构建输出
+/_build/
+*.cmx
+*.cmi
+*.cmo
+*.cmxa
+*.cma
+*.cmxs
+*.o
+*.annot
+*.a
+*.exe
+*.obj
+*.byte
+*.run
+*.d
+
+# Coq 生成文件
+*.vo
+*.vos
+*.vok
+*.glob
+*.aux
+*.cache
+*.report
+
+# CoqMakefile 自动生成
+CoqMakefile
+CoqMakefile.conf
+
+# VSCode/编辑器配置
+.vscode/
+*.swp
+*~
+
+# 其他
+*.log

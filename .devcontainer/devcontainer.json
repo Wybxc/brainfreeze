@@ -1,0 +1,32 @@
+{
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "maximedenes.vscoq",
+                "ocamllabs.ocaml-platform"
+            ],
+            "settings": {
+                "coqtop.binPath": "/home/coq/.opam/4.14.2+flambda/bin/",
+                "files.exclude": {
+                    "**/*.aux": true,
+                    "**/*.glob": true,
+                    "**/*.vo": true,
+                    "**/*.vos": true,
+                    "**/*.vok": true,
+                    "**/*.html": true,
+                    "**/.*.report": true,
+                    "**/.*.cache": true
+                },
+                "coq.loadCoqProject": true,
+                "coq.coqProjectRoot": ".",
+                "[coq]": {
+                    "editor.tabSize": 2,
+                    "editor.insertSpaces": true
+                }
+            }
+        }
+    }
+}
