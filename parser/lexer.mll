@@ -9,6 +9,9 @@ let next_line lexbuf =
     { pos with pos_bol = pos.pos_cnum;
               pos_lnum = pos.pos_lnum + 1
     }
+
+(* 检查整数是否在byte范围内(0-255) *)
+let is_byte_range n = n >= 0 && n <= 255
 }
 
 (* 定义正则表达式别名 *)
@@ -18,16 +21,19 @@ let alpha = ['a'-'z' 'A'-'Z']
 let ident = (alpha | '_') (alpha | digit | '_')*
 let whitespace = [' ' '\t']+
 let newline = '\r' | '\n' | "\r\n"
-let byte = "0x" hex hex?
-let integer = digit+
+let hex_byte = "0x" hex hex?
+let dec_integer = digit+
 
 rule token = parse
   | whitespace    { token lexbuf }
   | newline       { next_line lexbuf; token lexbuf }
   | "//"          { single_line_comment lexbuf }
   | "/*"          { multi_line_comment lexbuf }
-  | byte as b     { BYTE_LIT(int_of_string b) }
-  | integer as i  { INT_LIT(int_of_string i) }
+  | hex_byte as b { BYTE_LIT(int_of_string b) }
+  | dec_integer as i  {
+      let num = int_of_string i in
+      if is_byte_range num then BYTE_LIT(num) else INT_LIT(num)
+    }
   | '"'           { read_string (Buffer.create 16) lexbuf }
   | "fn"          { FN }
   | "let"         { LET }
@@ -59,20 +65,9 @@ rule token = parse
   | "<="          { LEQ }
   | ">="          { GEQ }
   | "="           { ASSIGN }
-  | "+="          { PLUS_ASSIGN }
-  | "-="          { MINUS_ASSIGN }
-  | "*="          { STAR_ASSIGN }
-  | "/="          { SLASH_ASSIGN }
-  | "%="          { PERCENT_ASSIGN }
   | "&&"          { AND }
   | "||"          { OR }
   | "!"           { NOT }
-  | "&"           { BIT_AND }
-  | "|"           { BIT_OR }
-  | "^"           { BIT_XOR }
-  | "~"           { BIT_NOT }
-  | "<<"          { SHL }
-  | ">>"          { SHR }
   | ident as id   { IDENT(id) }
   | eof           { EOF }
   | _             { raise (Failure ("Unexpected char: " ^ Lexing.lexeme lexbuf)) }

@@ -1,9 +1,10 @@
 (ocamllex lexer)
 
 (menhir
- (modules parser))
+ (modules parser)
+ (explain true))
 
 (library
- (name rustlike_parser)
+ (name bfParser)
  (modules ast lexer parser parser_driver unparser)
  (libraries str))
