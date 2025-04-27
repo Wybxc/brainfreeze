@@ -41,7 +41,7 @@ module BrainFreeze :
   | EVariable of string
   | EBinaryOp of expr * binop * expr
   | EUnaryOp of unop * expr
-  | EIf of expr * expr * expr option
+  | EIf of expr * expr * expr
   | EBlock of statement list * expr
   and statement =
   | SLet of string * expr option
@@ -57,7 +57,7 @@ module BrainFreeze :
   val statement_height : statement -> nat
 
   type program =
-    statement list
+    statement
     (* singleton inductive, whose constructor was PProgram *)
 
   val program_height : program -> nat

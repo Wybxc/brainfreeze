@@ -57,7 +57,7 @@ module BrainFreeze =
   | EVariable of string
   | EBinaryOp of expr * binop * expr
   | EUnaryOp of unop * expr
-  | EIf of expr * expr * expr option
+  | EIf of expr * expr * expr
   | EBlock of statement list * expr
   and statement =
   | SLet of string * expr option
@@ -78,11 +78,8 @@ module BrainFreeze =
   | EIf (cond, then_branch, else_branch) ->
     let h_cond = expr_height cond in
     let h_then = expr_height then_branch in
-    (match else_branch with
-     | Some else_branch0 ->
-       let h_else = expr_height else_branch0 in
-       add (max (max h_cond h_then) h_else) (S O)
-     | None -> add (max h_cond h_then) (S O))
+    let h_else = expr_height else_branch in
+    add (max (max h_cond h_then) h_else) (S O)
   | EBlock (stmts, ret) ->
     let h_stmts =
       fold_right (fun s acc -> max (statement_height s) acc) O stmts
@@ -116,11 +113,11 @@ module BrainFreeze =
       O)
 
   type program =
-    statement list
+    statement
     (* singleton inductive, whose constructor was PProgram *)
 
   (** val program_height : program -> nat **)
 
-  let program_height p =
-    fold_right (fun s acc -> max (statement_height s) acc) O p
+  let program_height =
+    statement_height
  end

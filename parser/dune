@@ -2,10 +2,12 @@
 
 (menhir
  (modules parser)
- (explain true))
+ (explain true)
+ (flags --table --unparsing))
 
 (library
  (name bfParser)
  (modules ast lexer parser parser_driver unparser)
- (libraries core coqExtract)
- (preprocess (staged_pps ppx_import ppx_deriving.show)))
+ (libraries core menhirLib menhirCST pprint coqExtract)
+ (preprocess (staged_pps ppx_import ppx_deriving.show))
+ (flags :standard -w -27))

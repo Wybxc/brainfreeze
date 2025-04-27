@@ -38,7 +38,7 @@ Inductive expr :=
 | EVariable : string -> expr
 | EBinaryOp : expr -> binop -> expr -> expr
 | EUnaryOp : unop -> expr -> expr
-| EIf : expr -> expr -> option expr -> expr
+| EIf : expr -> expr -> expr -> expr
 | EBlock : list statement -> expr -> expr
 with statement :=
 | SLet : string -> option expr -> statement
@@ -63,12 +63,8 @@ Fixpoint expr_height (e : expr) : nat :=
   | EIf cond then_branch else_branch =>
       let h_cond := expr_height cond in
       let h_then := expr_height then_branch in
-      match else_branch with
-      | None => max h_cond h_then + 1
-      | Some else_branch =>
-        let h_else := expr_height else_branch in
-        max (max h_cond h_then) h_else + 1
-      end
+      let h_else := expr_height else_branch in
+      max (max h_cond h_then) h_else + 1
   | EBlock stmts ret =>
       let h_stmts := fold_right (fun s acc => max (statement_height s) acc) 0 stmts in
       max h_stmts (expr_height ret) + 1
@@ -101,13 +97,12 @@ with statement_height (s : statement) : nat :=
   end.
 
 Inductive program :=
-| PProgram : list statement -> program
+| PProgram : statement -> program
 .
 
 Definition program_height (p : program) : nat :=
   match p with
-  | PProgram stmts =>
-      fold_right (fun s acc => max (statement_height s) acc) 0 stmts
+  | PProgram stmts => statement_height stmts
   end.
 
 End BrainFreeze.

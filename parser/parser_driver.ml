@@ -1,4 +1,5 @@
 (* Parser驱动程序 *)
+open Core
 open Lexing
 
 (* 错误处理 *)
@@ -35,15 +36,15 @@ let parse_string s =
 
 (* 从文件解析 *)
 let parse_file filename =
-  let chan = open_in filename in
+  let chan = In_channel.create filename in
   let lexbuf = Lexing.from_channel chan in
   try
     lexbuf.lex_curr_p <- {lexbuf.lex_curr_p with pos_fname= filename} ;
     let result = Parser.program Lexer.token lexbuf in
-    close_in chan ; result
-  with e -> close_in chan ; raise e
+    In_channel.close chan ; result
+  with e -> In_channel.close chan ; raise e
 
 (* 解析并格式化 *)
 let parse_and_format s =
   let ast = parse_string s in
-  Ast.show_program ast
+  Unparser.unparse ast
