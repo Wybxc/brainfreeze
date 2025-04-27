@@ -1,5 +1,5 @@
 {
-open Parser (* 导入Parser模块生成的标记类型 *)
+open Parser
 open Lexing
 
 (* 跟踪位置信息的辅助函数 *)
@@ -29,11 +29,8 @@ rule token = parse
   | newline       { next_line lexbuf; token lexbuf }
   | "//"          { single_line_comment lexbuf }
   | "/*"          { multi_line_comment lexbuf }
-  | hex_byte as b { BYTE_LIT(int_of_string b) }
-  | dec_integer as i  {
-      let num = int_of_string i in
-      if is_byte_range num then BYTE_LIT(num) else INT_LIT(num)
-    }
+  | hex_byte as b { INT_LIT(Z.of_string b) }
+  | dec_integer as i  { INT_LIT(Z.of_string i) }
   | '"'           { read_string (Buffer.create 16) lexbuf }
   | "fn"          { FN }
   | "let"         { LET }

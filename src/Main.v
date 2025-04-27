@@ -1,15 +1,13 @@
-Require Extraction.
-Require ExtrOcamlBasic.
-Require ExtrOcamlNativeString.
+Require Coq.extraction.Extraction.
+Require Coq.extraction.ExtrOcamlBasic.
+Require Coq.extraction.ExtrOcamlNativeString.
+Require Coq.extraction.ExtrOcamlZBigInt.
 
-Require Import String.
-Require Import List.
+Require Import Coq.Strings.String.
+Require Import Coq.Lists.List.
 Import ListNotations.
 
-(* 定义要提取的函数 *)
-Definition greet (name : string) : string :=
-  "Hello, " ++ name ++ "!".
+From BF Require Import BrainFreeze.
 
-(* 提取设置 *)
 Extraction Language OCaml.
-Extraction "CoqExtract" greet.
+Extraction "CoqExtract" BrainFreeze.program_height.

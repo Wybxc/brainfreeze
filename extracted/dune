@@ -1,6 +1,8 @@
 (rule
  (targets CoqExtract.mli CoqExtract.ml)
- (deps ../_CoqProject ../src/Main.v)
+ (deps
+  ../_CoqProject
+  (glob_files ../src/*.v))
  (mode promote)
  (action
   (chdir

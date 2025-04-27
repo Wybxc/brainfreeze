@@ -1,5 +1,5 @@
 (executable
  (name main)
  (modules main)
- (libraries str coqExtract bfParser)
+ (libraries zarith coqExtract bfParser)
  (flags :standard -w -9))

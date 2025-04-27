@@ -7,4 +7,5 @@
 (library
  (name bfParser)
  (modules ast lexer parser parser_driver unparser)
- (libraries str))
+ (libraries core coqExtract)
+ (preprocess (staged_pps ppx_import ppx_deriving.show)))
