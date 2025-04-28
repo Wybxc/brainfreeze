@@ -70,26 +70,26 @@ and unparse_standalone_expr = function
   | _ -> None
 
 and unparse_statement_list = function
-  | [] -> failwith "empty statement list"
-  | s :: [] -> (
-    match s with
-    | SLet _ as s ->
-        unparse_statement_item s |> Option.value_exn |> item_stmt_list
-    | SExpr e -> unparse_expr e |> expr_stmt_list
-    | SSemi e -> unparse_expr e |> semi_stmt_list )
-  | s :: ss -> (
-    match s with
-    | SLet _ as s ->
-        item_cons_stmt_list
-          (unparse_statement_item s |> Option.value_exn)
-          (unparse_statement_list ss)
-    | SExpr e -> (
-      match unparse_standalone_expr e with
-      | Some e -> expr_cons_stmt_list e (unparse_statement_list ss)
-      | None ->
-          semi_cons_stmt_list (unparse_expr e) (unparse_statement_list ss) )
-    | SSemi e ->
-        semi_cons_stmt_list (unparse_expr e) (unparse_statement_list ss) )
+  | [] -> None
+  | s :: [] ->
+      Some
+        ( match s with
+        | SLet _ as s ->
+            unparse_statement_item s |> Option.value_exn |> item_stmt_list
+        | SExpr e -> unparse_expr e |> expr_stmt_list
+        | SSemi e -> unparse_expr e |> semi_stmt_list )
+  | s :: ss ->
+      let ss = unparse_statement_list ss |> Option.value_exn in
+      Some
+        ( match s with
+        | SLet _ as s ->
+            let s = unparse_statement_item s |> Option.value_exn in
+            item_cons_stmt_list s ss
+        | SExpr e -> (
+          match unparse_standalone_expr e with
+          | Some e -> expr_cons_stmt_list e ss
+          | None -> semi_cons_stmt_list (unparse_expr e) ss )
+        | SSemi e -> semi_cons_stmt_list (unparse_expr e) ss )
 
 and unparse_statement_item = function
   | SLet (v, e) ->
@@ -98,7 +98,8 @@ and unparse_statement_item = function
   | _ -> None
 
 and unparse_block = function
-  | EBlock s -> failwith "TODO"
+  | EBlock [] -> empty_block ()
+  | EBlock s -> unparse_statement_list s |> Option.value_exn |> block
   | e -> unparse_expr e |> expr_stmt_list |> block
 
 let unparse_program = function
@@ -317,6 +318,10 @@ class printer =
 
     method! visit_statement_item s = super#visit_statement_item s |> group
 
+    method! visit_standalone_expr e = super#visit_standalone_expr e |> group
+
+    method! visit_expr e = super#visit_expr e |> group
+
     method! case_func_def name body =
       let name = self#visit_IDENT name in
       let body = self#visit_block body in
@@ -325,22 +330,22 @@ class printer =
     method! case_if_expr cond then_branch =
       let cond = self#visit_expr cond in
       let then_branch = self#visit_block then_branch in
-      (kwd "if " ^^ cond |> group) ^^ break 1 ^^ then_branch
+      (kwd "if " ^^ cond ^^ string " " |> group) ^^ then_branch
 
     method! case_if_else_expr cond then_branch else_branch =
       let cond = self#visit_expr cond in
       let then_branch = self#visit_block then_branch in
       let else_branch = self#visit_block else_branch in
-      (kwd "if " ^^ cond |> group)
-      ^^ (break 1 ^^ then_branch |> nest 2)
-      ^^ break 1 ^^ kwd "else"
-      ^^ (break 1 ^^ else_branch |> nest 2)
+      (kwd "if " ^^ cond ^^ string " " |> group)
+      ^^ (then_branch |> nest 2)
+      ^^ break 1 ^^ kwd "else "
+      ^^ (else_branch |> nest 2)
       |> group
 
     method! case_while_expr cond body =
       let cond = self#visit_expr cond in
       let body = self#visit_block body in
-      (kwd "while " ^^ cond |> group) ^^ break 1 ^^ body
+      (kwd "while " ^^ cond ^^ string " " |> group) ^^ body
   end
 
 let unparse p =

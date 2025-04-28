@@ -8,7 +8,7 @@ program: WHILE
 ##
 ##
 
-Expected a function definition
+expect a function definition
 
 program: FN WHILE
 ##
@@ -20,7 +20,7 @@ program: FN WHILE
 ## FN
 ##
 
-Expected an identifier after FN
+expect an identifier after FN
 
 program: FN IDENT WHILE
 ##
@@ -32,7 +32,7 @@ program: FN IDENT WHILE
 ## FN IDENT
 ##
 
-Expected '(' after function name
+expect '(' after function name
 
 program: FN IDENT LPAREN WHILE
 ##
@@ -44,7 +44,7 @@ program: FN IDENT LPAREN WHILE
 ## FN IDENT LPAREN
 ##
 
-Expected ')' after parameter list
+expect ')' after parameter list
 
 program: FN IDENT LPAREN RPAREN WHILE
 ##
@@ -56,7 +56,7 @@ program: FN IDENT LPAREN RPAREN WHILE
 ## FN IDENT LPAREN RPAREN
 ##
 
-Expected a block after function declaration
+expect a block after function declaration
 
 program: FN IDENT LPAREN RPAREN LBRACE STAR
 ##
@@ -69,7 +69,7 @@ program: FN IDENT LPAREN RPAREN LBRACE STAR
 ## LBRACE
 ##
 
-Expected a statement or '}'
+expect a statement or '}'
 
 program: FN IDENT LPAREN RPAREN LBRACE WHILE STAR
 ##
@@ -81,7 +81,7 @@ program: FN IDENT LPAREN RPAREN LBRACE WHILE STAR
 ## WHILE
 ##
 
-Expected an expression after WHILE
+expect an expression after WHILE
 
 program: FN IDENT LPAREN RPAREN LBRACE RETURN STAR
 ##
@@ -93,7 +93,7 @@ program: FN IDENT LPAREN RPAREN LBRACE RETURN STAR
 ## RETURN
 ##
 
-Expected an expression after RETURN
+expect an expression after RETURN
 
 program: FN IDENT LPAREN RPAREN LBRACE NOT STAR
 ##
@@ -105,7 +105,7 @@ program: FN IDENT LPAREN RPAREN LBRACE NOT STAR
 ## NOT
 ##
 
-Expected an expression after NOT
+expect an expression after NOT
 
 program: FN IDENT LPAREN RPAREN LBRACE MINUS STAR
 ##
@@ -117,7 +117,7 @@ program: FN IDENT LPAREN RPAREN LBRACE MINUS STAR
 ## MINUS
 ##
 
-Expected an expression after unary minus
+expect an expression after unary minus
 
 program: FN IDENT LPAREN RPAREN LBRACE LPAREN STAR
 ##
@@ -130,7 +130,7 @@ program: FN IDENT LPAREN RPAREN LBRACE LPAREN STAR
 ## LPAREN
 ##
 
-Expected an expression or ')' after '('
+expect an expression or ')' after '('
 
 program: FN IDENT LPAREN RPAREN LBRACE IF STAR
 ##
@@ -143,7 +143,7 @@ program: FN IDENT LPAREN RPAREN LBRACE IF STAR
 ## IF
 ##
 
-Expected an expression after IF
+expect an expression after IF
 
 program: FN IDENT LPAREN RPAREN LBRACE IDENT ASSIGN STAR
 ##
@@ -155,7 +155,7 @@ program: FN IDENT LPAREN RPAREN LBRACE IDENT ASSIGN STAR
 ## IDENT ASSIGN
 ##
 
-Expected an expression after assignment
+expect an expression after assignment
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT STAR STAR
 ##
@@ -167,7 +167,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT STAR STAR
 ## expr STAR
 ##
 
-Expected an expression after *
+expect an expression after *
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT SLASH STAR
 ##
@@ -179,7 +179,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT SLASH STAR
 ## expr SLASH
 ##
 
-Expected an expression after /
+expect an expression after /
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT PLUS STAR
 ##
@@ -191,7 +191,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT PLUS STAR
 ## expr PLUS
 ##
 
-Expected an expression after +
+expect an expression after +
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT PERCENT STAR
 ##
@@ -203,7 +203,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT PERCENT STAR
 ## expr PERCENT
 ##
 
-Expected an expression after %
+expect an expression after %
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT OR STAR
 ##
@@ -215,7 +215,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT OR STAR
 ## expr OR
 ##
 
-Expected an expression after OR
+expect an expression after OR
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT NEQ STAR
 ##
@@ -227,7 +227,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT NEQ STAR
 ## expr NEQ
 ##
 
-Expected an expression after !=
+expect an expression after !=
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT NEQ INT_LIT ASSIGN
 ##
@@ -252,7 +252,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT NEQ INT_LIT ASSIGN
 ## expr NEQ expr
 ##
 
-Unexpected token: '=' after a completed comparison expression
+Unexpect token: '=' after a completed comparison expression
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT MINUS STAR
 ##
@@ -264,7 +264,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT MINUS STAR
 ## expr MINUS
 ##
 
-Expected an expression after -
+expect an expression after -
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT LT STAR
 ##
@@ -276,7 +276,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT LT STAR
 ## expr LT
 ##
 
-Expected an expression after <
+expect an expression after <
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT LT INT_LIT ASSIGN
 ##
@@ -301,7 +301,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT LT INT_LIT ASSIGN
 ## expr LT expr
 ##
 
-Unexpected token: '=' after a completed comparison expression
+Unexpect token: '=' after a completed comparison expression
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT LEQ STAR
 ##
@@ -313,7 +313,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT LEQ STAR
 ## expr LEQ
 ##
 
-Expected an expression after <=
+expect an expression after <=
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT LEQ INT_LIT ASSIGN
 ##
@@ -329,8 +329,8 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT LEQ INT_LIT ASSIGN
 ## expr -> expr . LT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
 ## expr -> expr . GT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
 ## expr -> expr . LEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr LEQ expr . [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
 ## expr -> expr . GEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
-## expr -> expr GEQ expr . [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
 ## expr -> expr . AND expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
 ## expr -> expr . OR expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
 ##
@@ -338,7 +338,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT LEQ INT_LIT ASSIGN
 ## expr LEQ expr
 ##
 
-Unexpected token: '=' after a completed comparison expression
+Unexpect token: '=' after a completed comparison expression
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT GT STAR
 ##
@@ -350,7 +350,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT GT STAR
 ## expr GT
 ##
 
-Expected an expression after >
+expect an expression after >
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT GT INT_LIT ASSIGN
 ##
@@ -375,7 +375,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT GT INT_LIT ASSIGN
 ## expr GT expr
 ##
 
-Unexpected token: '=' after a completed comparison expression
+Unexpect token: '=' after a completed comparison expression
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT GEQ STAR
 ##
@@ -387,7 +387,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT GEQ STAR
 ## expr GEQ
 ##
 
-Expected an expression after >=
+expect an expression after >=
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT GEQ INT_LIT ASSIGN
 ##
@@ -412,7 +412,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT GEQ INT_LIT ASSIGN
 ## expr GEQ expr
 ##
 
-Unexpected token: '=' after a completed comparison expression
+Unexpect token: '=' after a completed comparison expression
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT EQ STAR
 ##
@@ -424,7 +424,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT EQ STAR
 ## expr EQ
 ##
 
-Expected an expression after ==
+expect an expression after ==
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT EQ INT_LIT ASSIGN
 ##
@@ -449,7 +449,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT EQ INT_LIT ASSIGN
 ## expr EQ expr
 ##
 
-Unexpected token: '=' after a completed comparison expression
+Unexpect token: '=' after a completed comparison expression
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT AND STAR
 ##
@@ -461,7 +461,7 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT AND STAR
 ## expr AND
 ##
 
-Expected an expression after AND
+expect an expression after AND
 
 program: FN IDENT LPAREN RPAREN LBRACE IF INT_LIT SEMICOLON
 ##
@@ -487,7 +487,7 @@ program: FN IDENT LPAREN RPAREN LBRACE IF INT_LIT SEMICOLON
 ## IF expr
 ##
 
-Expected a block after IF condition
+expect a block after IF condition
 
 program: FN IDENT LPAREN RPAREN LBRACE IF INT_LIT LBRACE RBRACE ELSE WHILE
 ##
@@ -499,7 +499,7 @@ program: FN IDENT LPAREN RPAREN LBRACE IF INT_LIT LBRACE RBRACE ELSE WHILE
 ## IF expr block ELSE
 ##
 
-Expected a block after ELSE
+expect a block after ELSE
 
 program: FN IDENT LPAREN RPAREN LBRACE LPAREN INT_LIT SEMICOLON
 ##
@@ -524,7 +524,7 @@ program: FN IDENT LPAREN RPAREN LBRACE LPAREN INT_LIT SEMICOLON
 ## LPAREN expr
 ##
 
-Expected ')' to close parenthesis
+expect ')' to close parenthesis
 
 program: FN IDENT LPAREN RPAREN LBRACE WHILE INT_LIT SEMICOLON
 ##
@@ -549,31 +549,31 @@ program: FN IDENT LPAREN RPAREN LBRACE WHILE INT_LIT SEMICOLON
 ## WHILE expr
 ##
 
-Expected a block after WHILE condition
+expect a block after WHILE condition
 
 program: FN IDENT LPAREN RPAREN LBRACE LET WHILE
 ##
 ## Ends in an error in state: 58.
 ##
-## statement_item -> LET . IDENT option(preceded(ASSIGN,expr)) SEMICOLON [ SEMICOLON RBRACE ]
+## statement_item -> LET . IDENT option(preceded(ASSIGN,expr)) SEMICOLON [ WHILE RETURN RBRACE NOT MINUS LPAREN LET LBRACE INT_LIT IF IDENT ]
 ##
 ## The known suffix of the stack is as follows:
 ## LET
 ##
 
-Expected an identifier after LET
+expect an identifier after LET
 
 program: FN IDENT LPAREN RPAREN LBRACE LET IDENT WHILE
 ##
 ## Ends in an error in state: 59.
 ##
-## statement_item -> LET IDENT . option(preceded(ASSIGN,expr)) SEMICOLON [ SEMICOLON RBRACE ]
+## statement_item -> LET IDENT . option(preceded(ASSIGN,expr)) SEMICOLON [ WHILE RETURN RBRACE NOT MINUS LPAREN LET LBRACE INT_LIT IF IDENT ]
 ##
 ## The known suffix of the stack is as follows:
 ## LET IDENT
 ##
 
-Expected '=' or ';' after variable identifier
+expect '=' or ';' after variable identifier
 
 program: FN IDENT LPAREN RPAREN LBRACE LET IDENT ASSIGN STAR
 ##
@@ -585,7 +585,7 @@ program: FN IDENT LPAREN RPAREN LBRACE LET IDENT ASSIGN STAR
 ## ASSIGN
 ##
 
-Expected an expression after '='
+expect an expression after '='
 
 program: FN IDENT LPAREN RPAREN LBRACE LET IDENT ASSIGN INT_LIT RPAREN
 ##
@@ -610,36 +610,13 @@ program: FN IDENT LPAREN RPAREN LBRACE LET IDENT ASSIGN INT_LIT RPAREN
 ## ASSIGN expr
 ##
 
-Expected ';' after assignment expression
+expect ';' after assignment expression
 
-program: FN IDENT LPAREN RPAREN LBRACE LET IDENT SEMICOLON WHILE
-##
-## Ends in an error in state: 66.
-##
-## statement_list -> statement_item . [ RBRACE ]
-## statement_list -> statement_item . SEMICOLON statement_list [ RBRACE ]
-##
-## The known suffix of the stack is as follows:
-## statement_item
-##
 
-Expected ';' or '}' after statement
-
-program: FN IDENT LPAREN RPAREN LBRACE LET IDENT SEMICOLON SEMICOLON STAR
-##
-## Ends in an error in state: 67.
-##
-## statement_list -> statement_item SEMICOLON . statement_list [ RBRACE ]
-##
-## The known suffix of the stack is as follows:
-## statement_item SEMICOLON
-##
-
-Expected a statement or '}'
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT RPAREN
 ##
-## Ends in an error in state: 71.
+## Ends in an error in state: 70.
 ##
 ## expr -> expr . PLUS expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
 ## expr -> expr . MINUS expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
@@ -662,11 +639,11 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT RPAREN
 ## expr
 ##
 
-Expected ';' or operator after expression
+expect ';' or operator after expression
 
 program: FN IDENT LPAREN RPAREN LBRACE INT_LIT SEMICOLON STAR
 ##
-## Ends in an error in state: 72.
+## Ends in an error in state: 71.
 ##
 ## statement_list -> expr SEMICOLON . [ RBRACE ]
 ## statement_list -> expr SEMICOLON . statement_list [ RBRACE ]
@@ -675,11 +652,11 @@ program: FN IDENT LPAREN RPAREN LBRACE INT_LIT SEMICOLON STAR
 ## expr SEMICOLON
 ##
 
-Expected a statement or '}'
+expect a statement or '}'
 
 program: FN IDENT LPAREN RPAREN LBRACE RBRACE WHILE
 ##
-## Ends in an error in state: 76.
+## Ends in an error in state: 75.
 ##
 ## program -> func_def . EOF [ # ]
 ##
@@ -687,5 +664,17 @@ program: FN IDENT LPAREN RPAREN LBRACE RBRACE WHILE
 ## func_def
 ##
 
-Expected end of file
+expect end of file
 
+program: FN IDENT LPAREN RPAREN LBRACE LET IDENT SEMICOLON STAR
+##
+## Ends in an error in state: 66.
+##
+## statement_list -> statement_item . [ RBRACE ]
+## statement_list -> statement_item . statement_list [ RBRACE ]
+##
+## The known suffix of the stack is as follows:
+## statement_item
+##
+
+expect a statement or '}'

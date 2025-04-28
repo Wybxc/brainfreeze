@@ -72,7 +72,7 @@ statement_list:
     { SExpr(e) :: s } [@name expr_cons_stmt_list]
   | e = expr SEMICOLON s = statement_list
     { SSemi(e) :: s } [@name semi_cons_stmt_list]
-  | i = statement_item SEMICOLON s = statement_list
+  | i = statement_item s = statement_list
     { i :: s } [@name item_cons_stmt_list]
   ;
 

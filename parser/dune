@@ -45,6 +45,12 @@
    %{target}
    (run menhir %{parser} --merge-errors %{new} --merge-errors %{updated}))))
 
+(rule
+ (alias runtest)
+ (deps syntax.messages syntax.messages.updated)
+ (action
+  (diff syntax.messages syntax.messages.updated)))
+
 (library
  (name bfParser)
  (modules ast lexer parser syntax_messages parser_driver unparser)

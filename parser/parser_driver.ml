@@ -20,13 +20,15 @@ let rec parse lexbuf (checkpoint : Ast.program I.checkpoint) =
       let checkpoint = I.resume checkpoint in
       parse lexbuf checkpoint
   | I.HandlingError env ->
+      let got = lexeme lexbuf in
       let state = I.current_state_number env in
       let message =
-        try Syntax_messages.message state |> String.strip
-        with _ -> "Unknown error"
+        try
+          let message = Syntax_messages.message state |> String.strip in
+          sprintf "Syntax error (E%d): %s, got '%s'" state message got
+        with _ -> sprintf "Syntax error (E%d): unexpected '%s'" state got
       in
-      let got = lexeme lexbuf in
-      failwith (sprintf "Syntax error: %s, got %s" message got)
+      failwith message
   | I.Accepted v -> v
   | I.Rejected -> failwith "invalid syntax (parser rejected the input)"
 
