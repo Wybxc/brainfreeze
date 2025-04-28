@@ -53,38 +53,46 @@ module BrainFreeze =
   | UNeg
 
   type expr =
+  | EUnit
   | ELiteral of literal
   | EVariable of string
+  | EAssign of string * expr
   | EBinaryOp of expr * binop * expr
   | EUnaryOp of unop * expr
-  | EIf of expr * expr * expr
-  | EBlock of statement list * expr
+  | EReturn of expr
+  | EIf of expr * expr * expr option
+  | EWhile of expr * expr
+  | EBlock of statement list
   and statement =
   | SLet of string * expr option
-  | SAssign of string * expr
   | SExpr of expr
-  | SIf of expr * statement * statement option
-  | SWhile of expr * statement
-  | SReturn
-  | SBlock of statement list
+  | SSemi of expr
 
   (** val expr_height : expr -> nat **)
 
   let rec expr_height = function
+  | EAssign (_, e0) -> add (expr_height e0) (S O)
   | EBinaryOp (e1, _, e2) ->
     let h1 = expr_height e1 in
     let h2 = expr_height e2 in add (max h1 h2) (S O)
   | EUnaryOp (_, e0) -> add (expr_height e0) (S O)
+  | EReturn e0 -> add (expr_height e0) (S O)
   | EIf (cond, then_branch, else_branch) ->
     let h_cond = expr_height cond in
     let h_then = expr_height then_branch in
-    let h_else = expr_height else_branch in
+    let h_else = match else_branch with
+                 | Some e0 -> expr_height e0
+                 | None -> O
+    in
     add (max (max h_cond h_then) h_else) (S O)
-  | EBlock (stmts, ret) ->
+  | EWhile (cond, body) ->
+    let h_cond = expr_height cond in
+    let h_body = expr_height body in add (max h_cond h_body) (S O)
+  | EBlock stmts ->
     let h_stmts =
       fold_right (fun s acc -> max (statement_height s) acc) O stmts
     in
-    add (max h_stmts (expr_height ret)) (S O)
+    add h_stmts (S O)
   | _ -> S O
 
   (** val statement_height : statement -> nat **)
@@ -94,30 +102,14 @@ module BrainFreeze =
     (match e with
      | Some e0 -> add (expr_height e0) (S O)
      | None -> S O)
-  | SAssign (_, e) -> add (expr_height e) (S O)
   | SExpr e -> add (expr_height e) (S O)
-  | SIf (cond, then_branch, else_branch) ->
-    let h_cond = expr_height cond in
-    let h_then = statement_height then_branch in
-    (match else_branch with
-     | Some else_branch0 ->
-       let h_else = statement_height else_branch0 in
-       add (max (max h_cond h_then) h_else) (S O)
-     | None -> add (max h_cond h_then) (S O))
-  | SWhile (cond, body) ->
-    let h_cond = expr_height cond in
-    let h_body = statement_height body in add (max h_cond h_body) (S O)
-  | SReturn -> S O
-  | SBlock stmts ->
-    add (fold_right (fun s0 acc -> max (statement_height s0) acc) O stmts) (S
-      O)
+  | SSemi e -> add (expr_height e) (S O)
 
   type program =
-    statement
-    (* singleton inductive, whose constructor was PProgram *)
+  | PProgram of string * expr
 
   (** val program_height : program -> nat **)
 
-  let program_height =
-    statement_height
+  let program_height = function
+  | PProgram (_, e) -> expr_height e
  end

@@ -2,8 +2,6 @@ Require Import Coq.ZArith.ZArith.
 Require Import Coq.Lists.List.
 Require Import Coq.Strings.String.
 
-From BF Require Import Int.
-
 Module BrainFreeze.
 
 Local Open Scope string_scope.
@@ -34,40 +32,51 @@ Inductive unop :=
 .
 
 Inductive expr :=
-| ELiteral : literal -> expr
+| EUnit     : expr
+| ELiteral  : literal -> expr
 | EVariable : string -> expr
+| EAssign   : string -> expr -> expr
 | EBinaryOp : expr -> binop -> expr -> expr
-| EUnaryOp : unop -> expr -> expr
-| EIf : expr -> expr -> expr -> expr
-| EBlock : list statement -> expr -> expr
+| EUnaryOp  : unop -> expr -> expr
+| EReturn   : expr -> expr
+| EIf       : expr -> expr -> option expr -> expr
+| EWhile    : expr -> expr -> expr
+| EBlock    : list statement -> expr
 with statement :=
-| SLet : string -> option expr -> statement
-| SAssign : string -> expr -> statement
+| SLet  : string -> option expr -> statement
 | SExpr : expr -> statement
-| SIf : expr -> statement -> option statement -> statement
-| SWhile : expr -> statement -> statement
-| SReturn : statement
-| SBlock : list statement -> statement
+| SSemi : expr -> statement
 .
 
 Fixpoint expr_height (e : expr) : nat :=
   match e with
+  | EUnit => 1
   | ELiteral _ => 1
   | EVariable _ => 1
+  | EAssign _ e => expr_height e + 1
   | EBinaryOp e1 _ e2 =>
       let h1 := expr_height e1 in
       let h2 := expr_height e2 in
       max h1 h2 + 1
   | EUnaryOp _ e =>
       expr_height e + 1
+  | EReturn e => expr_height e + 1
   | EIf cond then_branch else_branch =>
       let h_cond := expr_height cond in
       let h_then := expr_height then_branch in
-      let h_else := expr_height else_branch in
+      let h_else :=
+        match else_branch with
+        | None => 0
+        | Some e => expr_height e
+        end in
       max (max h_cond h_then) h_else + 1
-  | EBlock stmts ret =>
+  | EWhile cond body =>
+      let h_cond := expr_height cond in
+      let h_body := expr_height body in
+      max h_cond h_body + 1
+  | EBlock stmts =>
       let h_stmts := fold_right (fun s acc => max (statement_height s) acc) 0 stmts in
-      max h_stmts (expr_height ret) + 1
+      h_stmts + 1
   end
 with statement_height (s : statement) : nat :=
   match s with
@@ -76,33 +85,17 @@ with statement_height (s : statement) : nat :=
       | None => 1
       | Some e => expr_height e + 1
       end
-  | SAssign _ e => expr_height e + 1
   | SExpr e => expr_height e + 1
-  | SIf cond then_branch else_branch =>
-      let h_cond := expr_height cond in
-      let h_then := statement_height then_branch in
-      match else_branch with
-      | None => max h_cond h_then + 1
-      | Some else_branch =>
-        let h_else := statement_height else_branch in
-        max (max h_cond h_then) h_else + 1
-      end
-  | SWhile cond body =>
-      let h_cond := expr_height cond in
-      let h_body := statement_height body in
-      max h_cond h_body + 1
-  | SReturn => 1
-  | SBlock stmts =>
-      fold_right (fun s acc => max (statement_height s) acc) 0 stmts + 1
+  | SSemi e => expr_height e + 1
   end.
 
 Inductive program :=
-| PProgram : statement -> program
+| PProgram : string -> expr -> program
 .
 
 Definition program_height (p : program) : nat :=
   match p with
-  | PProgram stmts => statement_height stmts
+  | PProgram _ e => expr_height e
   end.
 
 End BrainFreeze.

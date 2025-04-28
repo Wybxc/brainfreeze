@@ -1,0 +1,691 @@
+program: WHILE
+##
+## Ends in an error in state: 0.
+##
+## program' -> . program [ # ]
+##
+## The known suffix of the stack is as follows:
+##
+##
+
+Expected a function definition
+
+program: FN WHILE
+##
+## Ends in an error in state: 1.
+##
+## func_def -> FN . IDENT LPAREN RPAREN block [ EOF ]
+##
+## The known suffix of the stack is as follows:
+## FN
+##
+
+Expected an identifier after FN
+
+program: FN IDENT WHILE
+##
+## Ends in an error in state: 2.
+##
+## func_def -> FN IDENT . LPAREN RPAREN block [ EOF ]
+##
+## The known suffix of the stack is as follows:
+## FN IDENT
+##
+
+Expected '(' after function name
+
+program: FN IDENT LPAREN WHILE
+##
+## Ends in an error in state: 3.
+##
+## func_def -> FN IDENT LPAREN . RPAREN block [ EOF ]
+##
+## The known suffix of the stack is as follows:
+## FN IDENT LPAREN
+##
+
+Expected ')' after parameter list
+
+program: FN IDENT LPAREN RPAREN WHILE
+##
+## Ends in an error in state: 4.
+##
+## func_def -> FN IDENT LPAREN RPAREN . block [ EOF ]
+##
+## The known suffix of the stack is as follows:
+## FN IDENT LPAREN RPAREN
+##
+
+Expected a block after function declaration
+
+program: FN IDENT LPAREN RPAREN LBRACE STAR
+##
+## Ends in an error in state: 5.
+##
+## block -> LBRACE . RBRACE [ WHILE STAR SLASH SEMICOLON RPAREN RETURN RBRACE PLUS PERCENT OR NOT NEQ MINUS LT LPAREN LET LEQ LBRACE INT_LIT IF IDENT GT GEQ EQ EOF ELSE AND ]
+## block -> LBRACE . statement_list RBRACE [ WHILE STAR SLASH SEMICOLON RPAREN RETURN RBRACE PLUS PERCENT OR NOT NEQ MINUS LT LPAREN LET LEQ LBRACE INT_LIT IF IDENT GT GEQ EQ EOF ELSE AND ]
+##
+## The known suffix of the stack is as follows:
+## LBRACE
+##
+
+Expected a statement or '}'
+
+program: FN IDENT LPAREN RPAREN LBRACE WHILE STAR
+##
+## Ends in an error in state: 6.
+##
+## standalone_expr -> WHILE . expr block [ WHILE STAR SLASH SEMICOLON RPAREN RETURN RBRACE PLUS PERCENT OR NOT NEQ MINUS LT LPAREN LET LEQ LBRACE INT_LIT IF IDENT GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## WHILE
+##
+
+Expected an expression after WHILE
+
+program: FN IDENT LPAREN RPAREN LBRACE RETURN STAR
+##
+## Ends in an error in state: 7.
+##
+## expr -> RETURN . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## RETURN
+##
+
+Expected an expression after RETURN
+
+program: FN IDENT LPAREN RPAREN LBRACE NOT STAR
+##
+## Ends in an error in state: 8.
+##
+## expr -> NOT . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## NOT
+##
+
+Expected an expression after NOT
+
+program: FN IDENT LPAREN RPAREN LBRACE MINUS STAR
+##
+## Ends in an error in state: 9.
+##
+## expr -> MINUS . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## MINUS
+##
+
+Expected an expression after unary minus
+
+program: FN IDENT LPAREN RPAREN LBRACE LPAREN STAR
+##
+## Ends in an error in state: 10.
+##
+## expr -> LPAREN . RPAREN [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> LPAREN . expr RPAREN [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN
+##
+
+Expected an expression or ')' after '('
+
+program: FN IDENT LPAREN RPAREN LBRACE IF STAR
+##
+## Ends in an error in state: 13.
+##
+## standalone_expr -> IF . expr block [ WHILE STAR SLASH SEMICOLON RPAREN RETURN RBRACE PLUS PERCENT OR NOT NEQ MINUS LT LPAREN LET LEQ LBRACE INT_LIT IF IDENT GT GEQ EQ AND ]
+## standalone_expr -> IF . expr block ELSE block [ WHILE STAR SLASH SEMICOLON RPAREN RETURN RBRACE PLUS PERCENT OR NOT NEQ MINUS LT LPAREN LET LEQ LBRACE INT_LIT IF IDENT GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## IF
+##
+
+Expected an expression after IF
+
+program: FN IDENT LPAREN RPAREN LBRACE IDENT ASSIGN STAR
+##
+## Ends in an error in state: 15.
+##
+## expr -> IDENT ASSIGN . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## IDENT ASSIGN
+##
+
+Expected an expression after assignment
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT STAR STAR
+##
+## Ends in an error in state: 19.
+##
+## expr -> expr STAR . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr STAR
+##
+
+Expected an expression after *
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT SLASH STAR
+##
+## Ends in an error in state: 22.
+##
+## expr -> expr SLASH . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr SLASH
+##
+
+Expected an expression after /
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT PLUS STAR
+##
+## Ends in an error in state: 24.
+##
+## expr -> expr PLUS . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr PLUS
+##
+
+Expected an expression after +
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT PERCENT STAR
+##
+## Ends in an error in state: 26.
+##
+## expr -> expr PERCENT . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr PERCENT
+##
+
+Expected an expression after %
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT OR STAR
+##
+## Ends in an error in state: 28.
+##
+## expr -> expr OR . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr OR
+##
+
+Expected an expression after OR
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT NEQ STAR
+##
+## Ends in an error in state: 30.
+##
+## expr -> expr NEQ . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr NEQ
+##
+
+Expected an expression after !=
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT NEQ INT_LIT ASSIGN
+##
+## Ends in an error in state: 31.
+##
+## expr -> expr . PLUS expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . MINUS expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . STAR expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . SLASH expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . PERCENT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . EQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . NEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr NEQ expr . [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . AND expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . OR expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr NEQ expr
+##
+
+Unexpected token: '=' after a completed comparison expression
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT MINUS STAR
+##
+## Ends in an error in state: 32.
+##
+## expr -> expr MINUS . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr MINUS
+##
+
+Expected an expression after -
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT LT STAR
+##
+## Ends in an error in state: 34.
+##
+## expr -> expr LT . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr LT
+##
+
+Expected an expression after <
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT LT INT_LIT ASSIGN
+##
+## Ends in an error in state: 35.
+##
+## expr -> expr . PLUS expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . MINUS expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . STAR expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . SLASH expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . PERCENT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . EQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . NEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr LT expr . [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . AND expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . OR expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr LT expr
+##
+
+Unexpected token: '=' after a completed comparison expression
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT LEQ STAR
+##
+## Ends in an error in state: 36.
+##
+## expr -> expr LEQ . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr LEQ
+##
+
+Expected an expression after <=
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT LEQ INT_LIT ASSIGN
+##
+## Ends in an error in state: 37.
+##
+## expr -> expr . PLUS expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . MINUS expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . STAR expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . SLASH expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . PERCENT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . EQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . NEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr GEQ expr . [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . AND expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . OR expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr LEQ expr
+##
+
+Unexpected token: '=' after a completed comparison expression
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT GT STAR
+##
+## Ends in an error in state: 38.
+##
+## expr -> expr GT . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr GT
+##
+
+Expected an expression after >
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT GT INT_LIT ASSIGN
+##
+## Ends in an error in state: 39.
+##
+## expr -> expr . PLUS expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . MINUS expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . STAR expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . SLASH expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . PERCENT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . EQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . NEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr GT expr . [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . AND expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . OR expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr GT expr
+##
+
+Unexpected token: '=' after a completed comparison expression
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT GEQ STAR
+##
+## Ends in an error in state: 40.
+##
+## expr -> expr GEQ . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr GEQ
+##
+
+Expected an expression after >=
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT GEQ INT_LIT ASSIGN
+##
+## Ends in an error in state: 41.
+##
+## expr -> expr . PLUS expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . MINUS expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . STAR expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . SLASH expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . PERCENT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . EQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . NEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr GEQ expr . [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . AND expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . OR expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr GEQ expr
+##
+
+Unexpected token: '=' after a completed comparison expression
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT EQ STAR
+##
+## Ends in an error in state: 42.
+##
+## expr -> expr EQ . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr EQ
+##
+
+Expected an expression after ==
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT EQ INT_LIT ASSIGN
+##
+## Ends in an error in state: 43.
+##
+## expr -> expr . PLUS expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . MINUS expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . STAR expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . SLASH expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . PERCENT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . EQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr EQ expr . [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . NEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GT expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GEQ expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . AND expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . OR expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr EQ expr
+##
+
+Unexpected token: '=' after a completed comparison expression
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT AND STAR
+##
+## Ends in an error in state: 44.
+##
+## expr -> expr AND . expr [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## expr AND
+##
+
+Expected an expression after AND
+
+program: FN IDENT LPAREN RPAREN LBRACE IF INT_LIT SEMICOLON
+##
+## Ends in an error in state: 46.
+##
+## expr -> expr . PLUS expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . MINUS expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . STAR expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . SLASH expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . PERCENT expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . EQ expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . NEQ expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LT expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GT expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LEQ expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GEQ expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . AND expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . OR expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## standalone_expr -> IF expr . block [ WHILE STAR SLASH SEMICOLON RPAREN RETURN RBRACE PLUS PERCENT OR NOT NEQ MINUS LT LPAREN LET LEQ LBRACE INT_LIT IF IDENT GT GEQ EQ AND ]
+## standalone_expr -> IF expr . block ELSE block [ WHILE STAR SLASH SEMICOLON RPAREN RETURN RBRACE PLUS PERCENT OR NOT NEQ MINUS LT LPAREN LET LEQ LBRACE INT_LIT IF IDENT GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## IF expr
+##
+
+Expected a block after IF condition
+
+program: FN IDENT LPAREN RPAREN LBRACE IF INT_LIT LBRACE RBRACE ELSE WHILE
+##
+## Ends in an error in state: 48.
+##
+## standalone_expr -> IF expr block ELSE . block [ WHILE STAR SLASH SEMICOLON RPAREN RETURN RBRACE PLUS PERCENT OR NOT NEQ MINUS LT LPAREN LET LEQ LBRACE INT_LIT IF IDENT GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## IF expr block ELSE
+##
+
+Expected a block after ELSE
+
+program: FN IDENT LPAREN RPAREN LBRACE LPAREN INT_LIT SEMICOLON
+##
+## Ends in an error in state: 50.
+##
+## expr -> LPAREN expr . RPAREN [ STAR SLASH SEMICOLON RPAREN RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . PLUS expr [ STAR SLASH RPAREN PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . MINUS expr [ STAR SLASH RPAREN PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . STAR expr [ STAR SLASH RPAREN PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . SLASH expr [ STAR SLASH RPAREN PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . PERCENT expr [ STAR SLASH RPAREN PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . EQ expr [ STAR SLASH RPAREN PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . NEQ expr [ STAR SLASH RPAREN PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . LT expr [ STAR SLASH RPAREN PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . GT expr [ STAR SLASH RPAREN PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . LEQ expr [ STAR SLASH RPAREN PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . GEQ expr [ STAR SLASH RPAREN PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . AND expr [ STAR SLASH RPAREN PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . OR expr [ STAR SLASH RPAREN PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## LPAREN expr
+##
+
+Expected ')' to close parenthesis
+
+program: FN IDENT LPAREN RPAREN LBRACE WHILE INT_LIT SEMICOLON
+##
+## Ends in an error in state: 55.
+##
+## expr -> expr . PLUS expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . MINUS expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . STAR expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . SLASH expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . PERCENT expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . EQ expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . NEQ expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LT expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GT expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . LEQ expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . GEQ expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . AND expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## expr -> expr . OR expr [ STAR SLASH PLUS PERCENT OR NEQ MINUS LT LEQ LBRACE GT GEQ EQ AND ]
+## standalone_expr -> WHILE expr . block [ WHILE STAR SLASH SEMICOLON RPAREN RETURN RBRACE PLUS PERCENT OR NOT NEQ MINUS LT LPAREN LET LEQ LBRACE INT_LIT IF IDENT GT GEQ EQ AND ]
+##
+## The known suffix of the stack is as follows:
+## WHILE expr
+##
+
+Expected a block after WHILE condition
+
+program: FN IDENT LPAREN RPAREN LBRACE LET WHILE
+##
+## Ends in an error in state: 58.
+##
+## statement_item -> LET . IDENT option(preceded(ASSIGN,expr)) SEMICOLON [ SEMICOLON RBRACE ]
+##
+## The known suffix of the stack is as follows:
+## LET
+##
+
+Expected an identifier after LET
+
+program: FN IDENT LPAREN RPAREN LBRACE LET IDENT WHILE
+##
+## Ends in an error in state: 59.
+##
+## statement_item -> LET IDENT . option(preceded(ASSIGN,expr)) SEMICOLON [ SEMICOLON RBRACE ]
+##
+## The known suffix of the stack is as follows:
+## LET IDENT
+##
+
+Expected '=' or ';' after variable identifier
+
+program: FN IDENT LPAREN RPAREN LBRACE LET IDENT ASSIGN STAR
+##
+## Ends in an error in state: 60.
+##
+## option(preceded(ASSIGN,expr)) -> ASSIGN . expr [ SEMICOLON ]
+##
+## The known suffix of the stack is as follows:
+## ASSIGN
+##
+
+Expected an expression after '='
+
+program: FN IDENT LPAREN RPAREN LBRACE LET IDENT ASSIGN INT_LIT RPAREN
+##
+## Ends in an error in state: 61.
+##
+## expr -> expr . PLUS expr [ STAR SLASH SEMICOLON PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . MINUS expr [ STAR SLASH SEMICOLON PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . STAR expr [ STAR SLASH SEMICOLON PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . SLASH expr [ STAR SLASH SEMICOLON PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . PERCENT expr [ STAR SLASH SEMICOLON PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . EQ expr [ STAR SLASH SEMICOLON PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . NEQ expr [ STAR SLASH SEMICOLON PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . LT expr [ STAR SLASH SEMICOLON PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . GT expr [ STAR SLASH SEMICOLON PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . LEQ expr [ STAR SLASH SEMICOLON PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . GEQ expr [ STAR SLASH SEMICOLON PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . AND expr [ STAR SLASH SEMICOLON PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . OR expr [ STAR SLASH SEMICOLON PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## option(preceded(ASSIGN,expr)) -> ASSIGN expr . [ SEMICOLON ]
+##
+## The known suffix of the stack is as follows:
+## ASSIGN expr
+##
+
+Expected ';' after assignment expression
+
+program: FN IDENT LPAREN RPAREN LBRACE LET IDENT SEMICOLON WHILE
+##
+## Ends in an error in state: 66.
+##
+## statement_list -> statement_item . [ RBRACE ]
+## statement_list -> statement_item . SEMICOLON statement_list [ RBRACE ]
+##
+## The known suffix of the stack is as follows:
+## statement_item
+##
+
+Expected ';' or '}' after statement
+
+program: FN IDENT LPAREN RPAREN LBRACE LET IDENT SEMICOLON SEMICOLON STAR
+##
+## Ends in an error in state: 67.
+##
+## statement_list -> statement_item SEMICOLON . statement_list [ RBRACE ]
+##
+## The known suffix of the stack is as follows:
+## statement_item SEMICOLON
+##
+
+Expected a statement or '}'
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT RPAREN
+##
+## Ends in an error in state: 71.
+##
+## expr -> expr . PLUS expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . MINUS expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . STAR expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . SLASH expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . PERCENT expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . EQ expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . NEQ expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . LT expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . GT expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . LEQ expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . GEQ expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . AND expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## expr -> expr . OR expr [ STAR SLASH SEMICOLON RBRACE PLUS PERCENT OR NEQ MINUS LT LEQ GT GEQ EQ AND ]
+## statement_list -> expr . [ RBRACE ]
+## statement_list -> expr . SEMICOLON [ RBRACE ]
+## statement_list -> expr . SEMICOLON statement_list [ RBRACE ]
+##
+## The known suffix of the stack is as follows:
+## expr
+##
+
+Expected ';' or operator after expression
+
+program: FN IDENT LPAREN RPAREN LBRACE INT_LIT SEMICOLON STAR
+##
+## Ends in an error in state: 72.
+##
+## statement_list -> expr SEMICOLON . [ RBRACE ]
+## statement_list -> expr SEMICOLON . statement_list [ RBRACE ]
+##
+## The known suffix of the stack is as follows:
+## expr SEMICOLON
+##
+
+Expected a statement or '}'
+
+program: FN IDENT LPAREN RPAREN LBRACE RBRACE WHILE
+##
+## Ends in an error in state: 76.
+##
+## program -> func_def . EOF [ # ]
+##
+## The known suffix of the stack is as follows:
+## func_def
+##
+
+Expected end of file
+

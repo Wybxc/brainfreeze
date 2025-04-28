@@ -1,21 +1,20 @@
 fn main() {
   let x = 1;
   let y = x + 2;
-  if x == 1 {
-    return;
-  }
-  y = y + 1;
-  let z = y + 3;
-  let a = z + 4;
-  if a == 8 {
-    return;
+  let z = if y > 2 {
+    1
   } else {
-    z = z + 1;
+    let a = x + x * x;
+    let b = a + 1;
+    a + b
+  };
+  let a = 1;
+  let b = 2;
+  while z > 0 {
     a = a + 1;
-    y = y + 1;
-    x = x + 1;
-    if x == 2 {
-      return;
-    }
+    b = b + 2;
+    let c = a + b;
+    z = z - c;
   }
+  let result = z + y;
 }

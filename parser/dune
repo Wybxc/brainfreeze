@@ -5,9 +5,50 @@
  (explain true)
  (flags --table --unparsing))
 
+(rule
+ (target syntax_messages.ml)
+ (deps
+  (:parser parser.mly)
+  (:msg syntax.messages))
+ (action
+  (with-stdout-to
+   %{target}
+   (run menhir %{parser} --compile-errors %{msg}))))
+
+(rule
+ (target new.messages)
+ (deps
+  (:parser parser.mly))
+ (action
+  (with-stdout-to
+   %{target}
+   (run menhir %{parser} --list-errors))))
+
+(rule
+ (target updated.messages)
+ (deps
+  (:parser parser.mly)
+  (:msg syntax.messages))
+ (action
+  (with-stdout-to
+   %{target}
+   (run menhir %{parser} --update-errors %{msg}))))
+
+(rule
+ (target syntax.messages.updated)
+ (deps
+  (:parser parser.mly)
+  (:new new.messages)
+  (:updated updated.messages))
+ (action
+  (with-stdout-to
+   %{target}
+   (run menhir %{parser} --merge-errors %{new} --merge-errors %{updated}))))
+
 (library
  (name bfParser)
- (modules ast lexer parser parser_driver unparser)
+ (modules ast lexer parser syntax_messages parser_driver unparser)
  (libraries core menhirLib menhirCST pprint coqExtract)
- (preprocess (staged_pps ppx_import ppx_deriving.show))
+ (preprocess
+  (staged_pps ppx_import ppx_deriving.show))
  (flags :standard -w -27))

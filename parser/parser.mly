@@ -4,10 +4,20 @@
 
 /* 标记声明 */
 %token <Z.t> INT_LIT
-%token <string> IDENT STRING_LIT
-%token BYTE_T FN LET IF ELSE WHILE FOR IN RETURN
-%token LBRACKET RBRACKET LBRACE RBRACE LPAREN RPAREN
-%token SEMICOLON COLON COMMA
+%token <string> IDENT
+// %token <string> STRING_LIT
+// %token BYTE_T
+%token FN
+%token LET
+%token IF ELSE
+%token WHILE
+// %token FOR IN
+%token RETURN
+// %token LBRACKET RBRACKET
+%token LBRACE RBRACE
+%token LPAREN RPAREN
+%token SEMICOLON
+// %token COLON COMMA
 %token PLUS MINUS STAR SLASH PERCENT
 %token EQ NEQ LT GT LEQ GEQ
 %token ASSIGN
@@ -15,19 +25,24 @@
 %token EOF
 
 /* 添加操作符优先级和结合性规则 */
-%nonassoc THEN
-%nonassoc ELSE
+// %nonassoc THEN
+// %nonassoc ELSE
 
+%nonassoc RETURN
+%nonassoc ASSIGN
 %left OR
 %left AND
 %nonassoc EQ NEQ LT GT LEQ GEQ
 %left PLUS MINUS
 %left STAR SLASH PERCENT
-%right UNOT
-%right UMINUS
+%right NOT
+%right U_MINUS
+%nonassoc STANDALONE
 
 /* 入口点 */
 %start <program> program
+
+%on_error_reduce statement_item expr standalone_expr
 
 %%
 
@@ -36,43 +51,53 @@ program:
   ;
 
 func_def:
-  | FN IDENT LPAREN RPAREN body = block
-    { body } [@name function_definition]
+  | FN name=IDENT LPAREN RPAREN body = block
+    { PProgram(name, body) } [@name func_def]
   ;
 
 block:
-  | LBRACE stmts = list(statement) RBRACE { SBlock(stmts) } [@name block]
+  | LBRACE RBRACE
+    { EBlock([]) } [@name empty_block]
+  | LBRACE stmts = statement_list RBRACE
+    { EBlock(stmts) } [@name block]
   ;
 
-statement:
-  | LET name = IDENT
-    init = option(preceded(ASSIGN, expr)) SEMICOLON
-    { SLet(name, init) } [@name let_statement]
-  | target = IDENT ASSIGN value = expr SEMICOLON
-    { SAssign(target, value) } [@name assignment]
+statement_list:
+  | e = statement_item { [e] } [@name item_stmt_list]
+  | e = expr
+    { [SExpr(e)] } [@name expr_stmt_list]
   | e = expr SEMICOLON
-    { SExpr(e) } [@name expression_statement]
-  | RETURN SEMICOLON
-    { SReturn } [@name return_statement]
-  | b = block
-    { b } [@name block_statement]
-  | IF cond = expr then_branch = block %prec THEN
-    { SIf(cond, then_branch, None) } [@name if_statement]
-  | IF cond = expr then_branch = block ELSE else_branch = block
-    { SIf(cond, then_branch, Some else_branch) } [@name if_else_statement]
-  | WHILE cond = expr body = block
-    { SWhile(cond, body) } [@name while_statement]
+    { [SSemi(e)] } [@name semi_stmt_list]
+  | e = standalone_expr s = statement_list
+    { SExpr(e) :: s } [@name expr_cons_stmt_list]
+  | e = expr SEMICOLON s = statement_list
+    { SSemi(e) :: s } [@name semi_cons_stmt_list]
+  | i = statement_item SEMICOLON s = statement_list
+    { i :: s } [@name item_cons_stmt_list]
   ;
 
-block_expr:
-  | LBRACE stmts = list(statement) e = expr RBRACE
-    { EBlock(stmts, e) } [@name expr_block]
+statement_item:
+  | LET name = IDENT
+    init = option(preceded(ASSIGN, expr))
+    SEMICOLON
+    { SLet(name, init) } [@name let_stmt]
+  ;
+
+standalone_expr:
+  | e = block { e } [@name block_expr]
+  | IF cond = expr then_branch = block
+    { EIf(cond, then_branch, None) } [@name if_expr]
+  | IF cond = expr then_branch = block ELSE else_branch = block
+    { EIf(cond, then_branch, Some else_branch) } [@name if_else_expr]
+  | WHILE cond = expr body = block
+    { EWhile(cond, body) } [@name while_expr]
 
 expr:
+  | LPAREN RPAREN { EUnit } [@name unit]
   | id = IDENT { EVariable(id) } [@name variable]
   | lit = literal { ELiteral(lit) } [@name literal]
   | LPAREN e = expr RPAREN { e } [@name paren]
-  | e = block_expr { e } [@name block_expr]
+  | e1 = IDENT ASSIGN e2 = expr { EAssign(e1, e2) } [@name assign]
   | e1 = expr PLUS e2 = expr { EBinaryOp(e1, BAdd, e2) } [@name add]
   | e1 = expr MINUS e2 = expr { EBinaryOp(e1, BSub, e2) } [@name subtract]
   | e1 = expr STAR e2 = expr { EBinaryOp(e1, BMul, e2) } [@name multiply]
@@ -86,10 +111,10 @@ expr:
   | e1 = expr GEQ e2 = expr { EBinaryOp(e1, BGe, e2) } [@name greater_equal]
   | e1 = expr AND e2 = expr { EBinaryOp(e1, BAnd, e2) } [@name logical_and]
   | e1 = expr OR e2 = expr { EBinaryOp(e1, BOr, e2) } [@name logical_or]
-  | NOT e = expr %prec UNOT { EUnaryOp(UNot, e) } [@name logical_not]
-  | MINUS e = expr %prec UMINUS { EUnaryOp(UNeg, e) } [@name negation]
-  | IF cond = expr then_branch = block_expr ELSE else_branch = block_expr
-    { EIf(cond, then_branch, else_branch) } [@name if_else_expr]
+  | NOT e = expr { EUnaryOp(UNot, e) } [@name logical_not]
+  | MINUS e = expr %prec U_MINUS { EUnaryOp(UNeg, e) } [@name negation]
+  | RETURN e = expr { EReturn(e) } [@name return_expr]
+  | e = standalone_expr { e } %prec STANDALONE [@name standalone_expr]
   ;
 
 /* 字面量表达式 */

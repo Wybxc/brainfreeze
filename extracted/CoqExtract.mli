@@ -37,28 +37,27 @@ module BrainFreeze :
   | UNeg
 
   type expr =
+  | EUnit
   | ELiteral of literal
   | EVariable of string
+  | EAssign of string * expr
   | EBinaryOp of expr * binop * expr
   | EUnaryOp of unop * expr
-  | EIf of expr * expr * expr
-  | EBlock of statement list * expr
+  | EReturn of expr
+  | EIf of expr * expr * expr option
+  | EWhile of expr * expr
+  | EBlock of statement list
   and statement =
   | SLet of string * expr option
-  | SAssign of string * expr
   | SExpr of expr
-  | SIf of expr * statement * statement option
-  | SWhile of expr * statement
-  | SReturn
-  | SBlock of statement list
+  | SSemi of expr
 
   val expr_height : expr -> nat
 
   val statement_height : statement -> nat
 
   type program =
-    statement
-    (* singleton inductive, whose constructor was PProgram *)
+  | PProgram of string * expr
 
   val program_height : program -> nat
  end

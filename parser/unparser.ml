@@ -4,18 +4,27 @@ open Parser.DCST
 
 let unparse_literial = integer_literal
 
-let unparse_option_expr =
+let option_expr =
   Option.fold ~init:(none_preceded_assign_expr_ ()) ~f:(fun _ ->
       some_preceded_assign_expr_ )
 
-let unparse_list_statement =
-  List.fold_right ~f:cons_statement ~init:(nil_statement ())
+(* let list_statement = function
+  | [] -> none_separated_nonempty_list_semicolon_statement_ ()
+  | hd :: tl ->
+      tl
+      |> List.fold_right ~f:more_semicolon_statement
+           ~init:(one_semicolon_statement hd)
+      |> some_separated_nonempty_list_semicolon_statement_ *)
 
 let rec unparse_expr =
   let choice e = expr_choice e (paren e) in
   function
+  | EUnit -> unit ()
   | EVariable v -> variable v
   | ELiteral l -> unparse_literial l |> literal
+  | EAssign (v, e) ->
+      let e = unparse_expr e in
+      assign v e
   | EUnaryOp (op, e) ->
       let e = unparse_expr e in
       let e = match op with UNeg -> negation e | UNot -> logical_not e in
@@ -39,56 +48,61 @@ let rec unparse_expr =
         | BOr -> logical_or l r
       in
       choice e
+  | EReturn e -> unparse_expr e |> return_expr
+  | (EIf _ | EWhile _ | EBlock _) as e ->
+      unparse_standalone_expr e |> Option.value_exn |> standalone_expr
+      |> choice
+
+and unparse_standalone_expr = function
   | EIf (cond, then_branch, else_branch) ->
+      Some
+        (let cond = unparse_expr cond in
+         let then_branch = unparse_block then_branch in
+         let else_branch = Option.map ~f:unparse_block else_branch in
+         match else_branch with
+         | None -> if_expr cond then_branch
+         | Some else_branch -> if_else_expr cond then_branch else_branch )
+  | EWhile (cond, body) ->
       let cond = unparse_expr cond in
-      let then_branch = unparse_expr_block then_branch in
-      let else_branch = unparse_expr_block else_branch in
-      if_else_expr cond then_branch else_branch |> choice
-  | EBlock _ as e -> unparse_expr_block e |> block_expr
+      let body = unparse_block body in
+      Some (while_expr cond body)
+  | EBlock _ as e -> Some (unparse_block e |> block_expr)
+  | _ -> None
 
-and unparse_statement = function
+and unparse_statement_list = function
+  | [] -> failwith "empty statement list"
+  | s :: [] -> (
+    match s with
+    | SLet _ as s ->
+        unparse_statement_item s |> Option.value_exn |> item_stmt_list
+    | SExpr e -> unparse_expr e |> expr_stmt_list
+    | SSemi e -> unparse_expr e |> semi_stmt_list )
+  | s :: ss -> (
+    match s with
+    | SLet _ as s ->
+        item_cons_stmt_list
+          (unparse_statement_item s |> Option.value_exn)
+          (unparse_statement_list ss)
+    | SExpr e -> (
+      match unparse_standalone_expr e with
+      | Some e -> expr_cons_stmt_list e (unparse_statement_list ss)
+      | None ->
+          semi_cons_stmt_list (unparse_expr e) (unparse_statement_list ss) )
+    | SSemi e ->
+        semi_cons_stmt_list (unparse_expr e) (unparse_statement_list ss) )
+
+and unparse_statement_item = function
   | SLet (v, e) ->
-      let e =
-        e |> Option.map ~f:(fun e -> unparse_expr e) |> unparse_option_expr
-      in
-      let_statement v e
-  | SAssign (v, e) ->
-      let e = unparse_expr e in
-      assignment v e
-  | SExpr e ->
-      let e = unparse_expr e in
-      expression_statement e
-  | SReturn -> return_statement ()
-  | SBlock b ->
-      b
-      |> List.map ~f:unparse_statement
-      |> unparse_list_statement |> block |> block_statement
-  | SIf (cond, then_branch, else_branch) -> (
-      let cond = unparse_expr cond
-      and then_branch = unparse_statement_block then_branch
-      and else_branch = Option.map ~f:unparse_statement_block else_branch in
-      match else_branch with
-      | None -> if_statement cond then_branch
-      | Some else_branch -> if_else_statement cond then_branch else_branch )
-  | SWhile (cond, body) ->
-      let cond = unparse_expr cond and body = unparse_statement_block body in
-      while_statement cond body
+      let e = e |> Option.map ~f:unparse_expr |> option_expr in
+      Some (let_stmt v e)
+  | _ -> None
 
-and unparse_expr_block = function
-  | EBlock (s, e) ->
-      let s = List.map ~f:unparse_statement s |> unparse_list_statement in
-      let e = unparse_expr e in
-      expr_block s e
-  | e -> expr_block (nil_statement ()) (unparse_expr e)
+and unparse_block = function
+  | EBlock s -> failwith "TODO"
+  | e -> unparse_expr e |> expr_stmt_list |> block
 
-and unparse_statement_block = function
-  | SBlock b ->
-      let s = List.map ~f:unparse_statement b |> unparse_list_statement in
-      block s
-  | s -> block (cons_statement (unparse_statement s) (nil_statement ()))
-
-let unparse_program p =
-  p |> unparse_statement_block |> function_definition "main" |> program
+let unparse_program = function
+  | PProgram (name, p) -> p |> unparse_block |> func_def name |> program
 
 module Ansi = struct
   (** Ansi terminal colors. *)
@@ -298,30 +312,22 @@ class printer =
       sym "(" ^^ (self#visit_expr e |> nest 2) ^^ sym ")" |> group
 
     method! case_block b =
-      let s = self#visit_list_statement_ b in
+      let s = self#visit_statement_list b in
       sym "{" ^^ (break 1 ^^ s |> nest 2) ^^ break 1 ^^ sym "}" |> group
 
-    method! case_expr_block s e =
-      let s = self#visit_list_statement_ s in
-      let e = self#visit_expr e in
-      sym "{"
-      ^^ (break 1 ^^ s ^^ break 1 ^^ e |> nest 2)
-      ^^ break 1 ^^ sym "}"
-      |> group
+    method! visit_statement_item s = super#visit_statement_item s |> group
 
-    method! visit_statement s = super#visit_statement s |> group
-
-    method! case_function_definition name body =
+    method! case_func_def name body =
       let name = self#visit_IDENT name in
       let body = self#visit_block body in
       (kwd "fn " ^^ name ^^ sym "() " |> group) ^^ body
 
-    method! case_if_statement cond then_branch =
+    method! case_if_expr cond then_branch =
       let cond = self#visit_expr cond in
       let then_branch = self#visit_block then_branch in
       (kwd "if " ^^ cond |> group) ^^ break 1 ^^ then_branch
 
-    method! case_if_else_statement cond then_branch else_branch =
+    method! case_if_else_expr cond then_branch else_branch =
       let cond = self#visit_expr cond in
       let then_branch = self#visit_block then_branch in
       let else_branch = self#visit_block else_branch in
@@ -330,6 +336,11 @@ class printer =
       ^^ break 1 ^^ kwd "else"
       ^^ (break 1 ^^ else_branch |> nest 2)
       |> group
+
+    method! case_while_expr cond body =
+      let cond = self#visit_expr cond in
+      let body = self#visit_block body in
+      (kwd "while " ^^ cond |> group) ^^ break 1 ^^ body
   end
 
 let unparse p =

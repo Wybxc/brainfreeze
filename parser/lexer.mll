@@ -31,25 +31,25 @@ rule token = parse
   | "/*"          { multi_line_comment lexbuf }
   | hex_byte as b { INT_LIT(Z.of_string b) }
   | dec_integer as i  { INT_LIT(Z.of_string i) }
-  | '"'           { read_string (Buffer.create 16) lexbuf }
+  (* | '"'           { read_string (Buffer.create 16) lexbuf } *)
   | "fn"          { FN }
   | "let"         { LET }
   | "if"          { IF }
   | "else"        { ELSE }
   | "while"       { WHILE }
-  | "for"         { FOR }
-  | "in"          { IN }
+  (* | "for"         { FOR } *)
+  (* | "in"          { IN } *)
   | "return"      { RETURN }
-  | "byte"        { BYTE_T }
-  | "["           { LBRACKET }
-  | "]"           { RBRACKET }
+  (* | "byte"        { BYTE_T } *)
+  (* | "["           { LBRACKET } *)
+  (* | "]"           { RBRACKET } *)
   | "{"           { LBRACE }
   | "}"           { RBRACE }
   | "("           { LPAREN }
   | ")"           { RPAREN }
   | ";"           { SEMICOLON }
-  | ":"           { COLON }
-  | ","           { COMMA }
+  (* | ":"           { COLON } *)
+  (* | ","           { COMMA } *)
   | "+"           { PLUS }
   | "-"           { MINUS }
   | "*"           { STAR }
@@ -83,7 +83,7 @@ and multi_line_comment = parse
   | _             { multi_line_comment lexbuf }
 
 (* 处理字符串字面量 *)
-and read_string buf = parse
+(* and read_string buf = parse
   | '"'           { STRING_LIT(Buffer.contents buf) }
   | '\\' 'n'      { Buffer.add_char buf '\n'; read_string buf lexbuf }
   | '\\' 'r'      { Buffer.add_char buf '\r'; read_string buf lexbuf }
@@ -92,4 +92,4 @@ and read_string buf = parse
   | '\\' '"'      { Buffer.add_char buf '"'; read_string buf lexbuf }
   | newline       { next_line lexbuf; Buffer.add_string buf (Lexing.lexeme lexbuf); read_string buf lexbuf }
   | eof           { raise (Failure "Unterminated string") }
-  | _ as c        { Buffer.add_char buf c; read_string buf lexbuf }
+  | _ as c        { Buffer.add_char buf c; read_string buf lexbuf } *)
